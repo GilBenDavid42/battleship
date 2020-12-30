@@ -6,7 +6,8 @@ Change Log: 12/30/2020
 """
 
 
-class Turn:
-    def __init__(self, general_conn_msg, position):
+class TurnResult:
+    def __init__(self, general_conn_msg, strike, ship_drawn):
         self.general_conn_msg = general_conn_msg
-        self.position = position
+        self.strike = strike
+        self.ship_drawn = ship_drawn

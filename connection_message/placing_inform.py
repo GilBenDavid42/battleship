@@ -1,6 +1,6 @@
 """
-File: placing_inform.py
-Purpose: placing_inform.py
+File: placing_inform_parser.py
+Purpose: placing_inform_parser.py
 Author: Gil Ben David
 Change Log: 12/30/2020 
 """

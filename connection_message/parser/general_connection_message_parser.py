@@ -6,8 +6,8 @@ Change Log: 12/30/2020
 """
 import struct
 
-from request.connection_message_parser import ConnectionMessageParser
-from request.general_connection_message import GeneralConnectionMessage
+from connection_message.parser.connection_message_parser import ConnectionMessageParser
+from connection_message.general_connection_message import GeneralConnectionMessage
 
 GENERAL_CONNECTION_MESSAGE_PACK_FORMAT = "bb"
 GENERAL_CONNECTION_MESSAGE_PAD_FORMAT = "XX"
