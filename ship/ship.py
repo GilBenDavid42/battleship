@@ -7,6 +7,6 @@ Change Log: 12/29/2020
 
 
 class Ship:
-    def __init__(self, length, to_width, ):
+    def __init__(self, length, ship_id):
         self.length = length
-        self.to_width = to_width
+        self.ship_id = ship_id

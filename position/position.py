@@ -6,11 +6,12 @@ Change Log: 12/29/2020
 """
 
 
-class Position2D:
+class Position:
     def __init__(self, x_pos, y_pos):
         self.x_pos = x_pos
         self.y_pos = y_pos
 
+    def
     def __repr__(self):
         return f"({self.x_pos}, {self.y_pos})"
 
