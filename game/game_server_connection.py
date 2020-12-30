@@ -8,20 +8,24 @@ import socket
 
 from game.game_connection import GameConnection
 
+INFINITE_TIMEOUT = None
+
 
 class GameServerConnection(GameConnection):
-    def __init__(self, host="", port=8300, connection=None):
+    def __init__(self, host="", port=8300, connection=None, listening_socket=None, timeout=INFINITE_TIMEOUT):
         self.port = port
         self.host = host
         self.connection = connection
+        self.listening_socket = listening_socket
+        self.timeout = timeout
 
     def wait_for_another_user(self):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listening_socket:
-            listening_socket.settimeout(5)
-            listening_socket.bind((self.host, self.port))
-            listening_socket.listen(1)
-            self.connection, addr = listening_socket.accept()
+        self.listening_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.listening_socket.settimeout(self.timeout)
+        self.listening_socket.bind((self.host, self.port))
+        self.listening_socket.listen(1)
+        self.connection, addr = self.listening_socket.accept()
 
-    def wait_for_turn(self):
-        data = self.connection.recv(1024)
-
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.listening_socket.close()
+        self.connection.close()

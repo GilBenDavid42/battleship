@@ -24,29 +24,38 @@ DEFAULT_SHIPS = [Ship(FIVE_LENGTH_SHIP_LENGTH, FIVE_LENGTH_SHIP_ID),
 
 
 class GameManager:
-    def __init__(self, board, game_connection, ships=None):
+    def __init__(self, board, game_logic, game_connection, ships=None):
         self.board = board
+        self.game_logic = game_logic
         self.game_connection = game_connection
         if ships is None:
             ships = DEFAULT_SHIPS
         self.ships = ships
 
+    @staticmethod
+    def _get_position_input():
+        pos_input = input(
+            "Please choose your x position and you y position separated by space: ")
+        x_pos, y_pos = pos_input.split(" ")
+        return Position(x_pos, y_pos)
+
     def _get_ship_inputs(self):
         print(f"Your map is {self.board.side_size}x{self.board.side_size} size")
         for ship in self.ships:
             position_chosen = False
+            print(f"You have your ships of length {ship.length} with id {ship.ship_id}")
             while not position_chosen:
-                print(f"You have your ships of length {ship.length} with id {ship.ship_id}")
-                pos_input = input(
-                    "Please print how your x position and you y position separated by space for this ship: ")
-                x_pos, y_pos = pos_input.split(" ")
-                position = Position(x_pos, y_pos)
+                position = self._get_position_input()
                 position_chosen = not self.board.is_holder_exists_in(position)
                 if position_chosen:
                     self.board.set_ship_holder(position, ship)
 
     def start_game(self):
-        self._get_ship_inputs()
-        with self.game_connection:
-            self.game_connection.wait_for_another_user()
-            self.game_connection.make_turn()
+        self.game_logic.start_game()
+        while not self.game_logic.game_done:
+            print("Please give position for your enemy to strike: ")
+            enemy_ship_position = self._get_position_input()
+            self.game_logic.make_turn(enemy_ship_position)
+
+        if not self.game_logic.is_game_legal():
+            print("Game wasn't legal!")

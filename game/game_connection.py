@@ -11,3 +11,7 @@ class GameConnection(abc.ABC):
     @abc.abstractmethod
     def wait_for_another_user(self):
         pass
+
+    @abc.abstractmethod
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass

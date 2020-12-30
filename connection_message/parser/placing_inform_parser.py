@@ -8,7 +8,7 @@ import struct
 
 from connection_message.parser.connection_message_parser import ConnectionMessageParser
 from connection_message.parser.general_connection_message_parser import GeneralConnectionMessageParser, \
-    GENERAL_CONNECTION_MESSAGE_PAD_FORMAT
+    GENERAL_CONNECTION_MESSAGE_SIZE_BYTES
 from connection_message.placing_inform import PlacingInform
 
 PLACING_INFORM_FORMAT = "s"
@@ -19,9 +19,9 @@ class PlacingInformParser(ConnectionMessageParser):
     @staticmethod
     def from_stream(stream):
         general_conn_msg = GeneralConnectionMessageParser.from_stream(stream)
-        placing_hash = struct.unpack(GENERAL_CONNECTION_MESSAGE_PAD_FORMAT + PLACING_INFORM_FORMAT, stream)
+        placing_hash = stream[GENERAL_CONNECTION_MESSAGE_SIZE_BYTES:]
 
-        return PlacingInform(general_conn_msg, placing_hash)
+        return PlacingInform(placing_hash, general_conn_msg)
 
     @staticmethod
     def to_stream(connection_message):

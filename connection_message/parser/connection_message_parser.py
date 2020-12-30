@@ -7,12 +7,7 @@ Change Log: 12/29/2020
 
 import abc
 
-GAME_INVITE_ID = 1
-GAME_ACCEPT_ID = 2
-PLACING_INFORM_ID = 3
-TURN_ID = 4
-TURN_RESULT_ID = 5
-PLACEMENT_INFORM_ID = 6
+
 
 
 class ConnectionMessageParser(abc.ABC):
